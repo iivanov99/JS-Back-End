@@ -1,33 +1,33 @@
 {
-    "lastIndex": 5,
-    "entities": [
-        {
-            "id": 2,
-            "name": "test1",
-            "description": "updated des2c",
-            "imageUrl": "https://thingsidesire.com/wp-content/uploads/2018/06/Eco-Dark-Rubik%E2%80%99s-Cube2.jpg",
-            "difficultyLevel": 4
-        },
-        {
-            "id": 3,
-            "name": "name",
-            "description": "descr",
-            "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/71qZ%2BDsFRQL._SL1500_.jpg",
-            "difficultyLevel": "1"
-        },
-        {
-            "id": 4,
-            "name": "Next Level Cube",
-            "description": "A cube from the feature",
-            "imageUrl": "https://cdnp1.stackassets.com/fa485a2109b92fe2bcf8e0decf3f7e89076a9139/store/opt/596/447/11b9346ee68f414130aa6a203a48bbe538dd607e772234fd6597a373a6ac/product_13795_product_shots1_image.jpg",
-            "difficultyLevel": "6"
-        },
-        {
-            "id": 5,
-            "name": "fancy cube",
-            "description": "a cube with style",
-            "imageUrl": "https://cdn.shopify.com/s/files/1/0646/0891/products/giiker_large.jpg?v=1545443273",
-            "difficultyLevel": "3"
-        }
-    ]
+   "lastIndex": 5,
+   "entities": [
+      {
+         "id": 2,
+         "name": "test1",
+         "description": "updated des2c",
+         "imageUrl": "https://thingsidesire.com/wp-content/uploads/2018/06/Eco-Dark-Rubik%E2%80%99s-Cube2.jpg",
+         "difficultyLevel": 4
+      },
+      {
+         "id": 3,
+         "name": "name",
+         "description": "descr",
+         "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/71qZ%2BDsFRQL._SL1500_.jpg",
+         "difficultyLevel": "1"
+      },
+      {
+         "id": 4,
+         "name": "Next Level Cube",
+         "description": "A cube from the feature",
+         "imageUrl": "https://cdnp1.stackassets.com/fa485a2109b92fe2bcf8e0decf3f7e89076a9139/store/opt/596/447/11b9346ee68f414130aa6a203a48bbe538dd607e772234fd6597a373a6ac/product_13795_product_shots1_image.jpg",
+         "difficultyLevel": "6"
+      },
+      {
+         "id": 5,
+         "name": "fancy cube",
+         "description": "a cube with style",
+         "imageUrl": "https://cdn.shopify.com/s/files/1/0646/0891/products/giiker_large.jpg?v=1545443273",
+         "difficultyLevel": "3"
+      }
+   ]
 }
