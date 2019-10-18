@@ -6,15 +6,23 @@ module.exports = {
     res.render('cube/create', { user });
   },
   createPost: async (req, res) => {
+    const { user } = req;
+
     try {
-      const { user } = req;
       const { name, description, imageUrl, difficultyLevel } = req.body;
       const newCube = { name, description, imageUrl, difficultyLevel: +difficultyLevel, creatorId: user._id };
       await Cube.create(newCube);
       res.redirect('/');
     } catch (err) {
-      console.error(err);
-      res.redirect('/');
+      const errors = [];
+
+      if (err.name === 'ValidationError') {
+        Object.keys(err.errors).forEach(errKey => {
+          errors.push(err.errors[errKey]);
+        });
+      }
+
+      res.render('cube/create', { errors: err.errors, user });
     }
   },
   details: async (req, res) => {
@@ -32,7 +40,7 @@ module.exports = {
       res.render('cube/details', { cube, user });
     } catch (err) {
       if (err.name === 'CastError' && err.kind === 'ObjectId') {
-        res.redirect('/');
+        res.redirect('/not-found');
         return;
       }
     }
@@ -45,8 +53,12 @@ module.exports = {
       if (!cube) { throw new Error('Current user is not the cube creator!'); }
       res.render('cube/edit', { cube, user })
     } catch (err) {
-      if ((err.name === 'CastError' && err.kind === 'ObjectId') ||
-        err.message === 'Current user is not the cube creator!') {
+      if (err.name === 'CastError' && err.kind === 'ObjectId') {
+        res.redirect('/not-found');
+        return;
+      }
+
+      if (err.message === 'Current user is not the cube creator!') {
         res.redirect('/');
         return;
       }
@@ -84,8 +96,12 @@ module.exports = {
       if (!cube) { throw new Error('Current user is not the cube creator!'); }
       res.render('cube/delete', { cube, user, difficultyToText: difficultyToText[cube.difficultyLevel] })
     } catch (err) {
-      if ((err.name === 'CastError' && err.kind === 'ObjectId') ||
-        err.message === 'Current user is not the cube creator!') {
+      if (err.name === 'CastError' && err.kind === 'ObjectId') {
+        res.redirect('/not-found');
+        return;
+      }
+
+      if (err.message === 'Current user is not the cube creator!') {
         res.redirect('/');
         return;
       }

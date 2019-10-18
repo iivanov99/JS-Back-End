@@ -5,12 +5,26 @@ const bcrypt = require('bcrypt');
 const userSchema = new Schema({
   username: {
     type: Schema.Types.String,
-    required: true,
-    unique: true
+    required: [true, 'Username is required!'],
+    unique: true,
+    minlength: [5, 'Username must be atleast 5 characters long!'],
+    validate: {
+      validator: (v) => {
+        return /^[A-Za-z0-9]+$/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid username! It must consist only with English letters and digits!`
+    }
   },
   password: {
     type: Schema.Types.String,
-    required: true
+    required: [true, 'Password is required!'],
+    minlength: [8, 'Password must be atleast 8 characters long!'],
+    validate: {
+      validator: (v) => {
+        return /^[A-Za-z0-9]+$/.test(v);
+      },
+      message: (props) => `Invalid password! It must consist only with English letters and digits!`
+    }
   }
 });
 

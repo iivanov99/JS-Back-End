@@ -7,13 +7,23 @@ module.exports = {
     res.render('accessory/create', { user });
   },
   createPost: async (req, res) => {
+    const { user } = req;
+
     try {
       const { name, description, imageUrl } = req.body;
       const newAccessory = { name, description, imageUrl };
       await Accessory.create(newAccessory)
       res.redirect('/');
     } catch (err) {
-      console.error(err);
+      const errors = [];
+
+      if (err.name === 'ValidationError') {
+        Object.keys(err.errors).forEach(errKey => {
+          errors.push(err.errors[errKey]);
+        });
+      }
+
+      res.render('accessory/create', { errors: err.errors, user });
     }
   },
   attachGet: async (req, res) => {

@@ -11,8 +11,8 @@ module.exports = {
     const { username, password, repeatPassword } = req.body;
 
     if (password !== repeatPassword) {
-      const error = { message: 'Both passwords must match!' };
-      res.render('user/register', { error });
+      const errors = [{ message: 'Both passwords must match!' }];
+      res.render('user/register', { errors });
       return;
     }
 
@@ -20,11 +20,19 @@ module.exports = {
       await User.create({ username, password });
       res.redirect('/login');
     } catch (err) {
+      const errors = [];
+
       if (err.name === 'MongoError' && err.code === 11000) {
-        const error = { message: 'Username is already taken!' };
-        res.render('user/register', { error });
-        return;
+        errors.push({ message: 'Username is already taken!' });
       }
+
+      if (err.name === 'ValidationError') {
+        Object.keys(err.errors).forEach(errKey => {
+          errors.push(err.errors[errKey]);
+        });
+      }
+
+      res.render('user/register', { errors });
     }
   },
   loginGet: (req, res) => {
@@ -47,8 +55,8 @@ module.exports = {
       res.cookie(authCookieName, accessToken).redirect('/');
     } catch (err) {
       if (['Invalid username!', 'Invalid password!'].includes(err.message)) {
-        const error = { message: 'Invalid username or password!' };
-        res.render('user/login', { error });
+        const errors = [{ message: 'Invalid username or password!' }];
+        res.render('user/login', { errors });
         return;
       }
     }

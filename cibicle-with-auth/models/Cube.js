@@ -4,16 +4,35 @@ const { Schema } = mongoose;
 const cubeSchema = new Schema({
   name: {
     type: Schema.Types.String,
-    required: true
+    required: [true, 'Cube name is required!'],
+    minlength: [5, 'Cube name must be atleast 5 characters long.'],
+    validate: {
+      validator: (v) => {
+        return /^[A-Za-z0-9.,'"!\s]+$/.test(v);
+      },
+      message: (props) => 'Cube name must contain only English letters, digits and whitespaces.'
+    },
   },
   description: {
     type: Schema.Types.String,
-    required: true,
-    maxlength: 300
+    required: [true, 'Cube description is required!'],
+    minlength: [20, 'Cube description must be atleast 20 characters long.'],
+    validate: {
+      validator: (v) => {
+        return /^[A-Za-z0-9'\s]+$/.test(v);
+      },
+      message: (props) => 'Cube description must contain only English letters, digits and whitespaces.'
+    }
   },
   imageUrl: {
     type: Schema.Types.String,
-    required: true
+    required: [ true, 'Image Url is required!'],
+    validate: {
+      validator: (v) => {
+        return v.startsWith('http');
+      },
+      message: (props) => 'Image url must start with http or https.'
+    }
   },
   difficultyLevel: {
     type: Schema.Types.Number,
@@ -30,10 +49,5 @@ const cubeSchema = new Schema({
     required: true
   }
 });
-
-cubeSchema.path('imageUrl').validate(function () {
-  return this.imageUrl.startsWith('http') ||
-    (this.imageUrl.endsWith('.jpg') || this.imageUrl.endsWith('.png'));
-}, 'Image URL must start with http or end with .jpg or .png');
 
 module.exports = mongoose.model('Cube', cubeSchema);
