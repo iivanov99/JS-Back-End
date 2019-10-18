@@ -22,7 +22,7 @@ module.exports = {
         });
       }
 
-      res.render('cube/create', { errors: err.errors, user });
+      res.render('cube/create', { errors, user });
     }
   },
   details: async (req, res) => {

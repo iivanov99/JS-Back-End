@@ -23,7 +23,7 @@ module.exports = {
         });
       }
 
-      res.render('accessory/create', { errors: err.errors, user });
+      res.render('accessory/create', { errors, user });
     }
   },
   attachGet: async (req, res) => {
