@@ -8,19 +8,21 @@ module.exports = {
     res.render('user/register');
   },
   registerPost: async (req, res) => {
-    const { username, password, repeatPassword } = req.body;
-
-    if (password !== repeatPassword) {
-      const errors = [{ message: 'Both passwords must match!' }];
-      res.render('user/register', { errors });
-      return;
-    }
-
     try {
+      const { username, password, repeatPassword } = req.body;
+
+      if (password !== repeatPassword) {
+        throw new Error('Both passwords must match!');
+      }
+
       await User.create({ username, password });
       res.redirect('/login');
     } catch (err) {
       const errors = [];
+
+      if (err.message === 'Both passwords must match!') {
+        errors.push({ message: err.message });
+      }
 
       if (err.name === 'MongoError' && err.code === 11000) {
         errors.push({ message: 'Username is already taken!' });
