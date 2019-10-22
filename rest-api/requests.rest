@@ -1,0 +1,43 @@
+GET http://localhost:8080/api/user/
+
+###
+
+GET http://localhost:8080/api/user/5daec74d0d10d60a8cd600a4
+
+###
+
+POST http://localhost:8080/api/register
+Content-Type:application/json
+
+{
+  "email": "test@gmail.com",
+  "firstName": "Test",
+  "lastName": "Testov",
+  "password": "123",
+  "repeatPassword": "123"
+}
+
+###
+
+PUT http://localhost:8080/api/user/5daec74d0d10d60a8cd600a4
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "firstName": "Test",
+  "lastName": "Testovich"
+}
+
+###
+
+DELETE http://localhost:8080/api/user/5daec2fbe031f4315cf40673
+
+###
+
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "123"
+}
