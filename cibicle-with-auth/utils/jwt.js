@@ -3,7 +3,12 @@ const { accessTokenSecret } = require('../app-config');
 
 module.exports = {
   createToken: (data) => {
-    return jwt.sign(data, accessTokenSecret, { expiresIn: '20m' });
+    return new Promise((resolve, reject) => {
+      jwt.sign(data, accessTokenSecret, { expiresIn: '20m' }, (err, accessToken) => {
+        if (err) { reject(err); return; }
+        resolve(accessToken);
+      });
+    });
   },
   verifyToken: (accessToken) => {
     return new Promise((resolve, reject) => {
