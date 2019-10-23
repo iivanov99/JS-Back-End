@@ -1,0 +1,30 @@
+<main>
+  <h1>Browser</h1>
+  <form action="" method="">
+    <input type="text" class="search" name="search" placeholder="Search...">
+    <input type="number" name="from" class="difficulty" placeholder="Difficulty from...">
+    <span>-</span>
+    <input type="number" name="to" class="difficulty" placeholder="Difficulty to...">
+    <input type="submit" value="search">
+  </form>
+  {{#if user}}
+  {{#each cubes}}
+  <div class="cube">
+    <img class="cube" src="{{this.imageUrl}}">
+    <p class="name">{{this.name}}</p>
+    <p><span>Difficulty level:</span>{{this.difficultyLevel}}</p>
+    <a class="btn" href="/cube/details/{{this._id}}">Details</a>
+    <a class="btn" href="/accessory/attach/{{this._id}}">Attach Accessory</a>
+  </div>
+  {{/each}}
+  {{else}}
+  {{#each cubes}}
+  <div class="cube">
+    <img class="cube" src="{{this.imageUrl}}">
+    <p class="name">{{this.name}}</p>
+    <p><span>Difficulty level:</span>{{this.difficultyLevel}}</p>
+    <a class="btn" href="/cube/details/{{this._id}}">Details</a>
+  </div>
+  {{/each}}
+  {{/if}}
+</main>
