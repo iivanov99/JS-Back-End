@@ -1,4 +1,5 @@
 const models = require('../models');
+const utils = require('../utils');
 
 module.exports = {
   get: {
@@ -71,8 +72,7 @@ module.exports = {
         res.redirect('/');
       } catch (err) {
         if (err.name === 'ValidationError') {
-          const errors = [];
-          Object.keys(err.errors).forEach(errorKey => errors.push(err.errors[errorKey]));
+          const errors = utils.extractValidationErrors(err);
           res.render('cube/create', { user: req.user, errors, oldInput: req.body });
           return;
         }
@@ -90,8 +90,7 @@ module.exports = {
         res.redirect('/');
       } catch (err) {
         if (err.name === 'ValidationError') {
-          const errors = [];
-          Object.keys(err.errors).forEach(errorKey => errors.push(err.errors[errorKey]));
+          const errors = utils.extractValidationErrors(err);
           const oldInput = { name, description, imageUrl, _id: id }
           res.render('cube/edit', { errors, user, cube: oldInput });
           return;

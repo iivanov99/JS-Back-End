@@ -25,20 +25,14 @@ module.exports = {
         await models.User.create({ username, password });
         res.redirect('/user/login');
       } catch (err) {
-        const errors = [];
+        let errors = [];
 
         if (err.message === 'Both passwords must match!') {
-          errors.push({ message: err.message });
-        }
-
-        if (err.name === 'MongoError' && err.code === 11000) {
-          errors.push({ message: 'Username is already taken!' });
-        }
-
-        if (err.name === 'ValidationError') {
-          Object.keys(err.errors).forEach(errKey => {
-            errors.push(err.errors[errKey]);
-          });
+          errors = [{ message: err.message }];
+        } else if (err.name === 'MongoError' && err.code === 11000) {
+          errors = [{ message: 'Username is already taken!' }];
+        } else if (err.name === 'ValidationError') {
+          errors = utils.extractValidationErrors(err);
         }
 
         res.render('user/register', { errors });
@@ -63,7 +57,6 @@ module.exports = {
         if (['Invalid username!', 'Invalid password!'].includes(err.message)) {
           const errors = [{ message: err.message }];
           res.render('user/login', { errors });
-          return;
         }
       }
     },
